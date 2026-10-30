@@ -1,3 +1,7 @@
+![Visitors](https://api.visitorbadge.io/api/visitors?path=https%3A%2F%2Fgithub.com%2FBCICDIS%2Fkendrah&label=K.E.N.D.R.A.H.%20Visitors&labelColor=%23090040&countColor=%23B13BFF&style=flat&labelStyle=lower)
+
+<p align="center"><img src="assets/kendrah-banner.svg" alt="K.E.N.D.R.A.H - Unified Spectrum Programming Language" width="100%"></p>
+
 # K.E.N.D.R.A.H.
 
 Unified Spectrum Programming Language: research/engineering project (see `docs/`). Current state (2026-10-30): typed front end with generics, `impl` blocks/methods, references with a borrow checker, owned `String`/`Vec`/`Box`/structs/enums with drop glue and by-value `match` (recursive types through `Box`); a verified intermediate representation (UIR); two interpreters; and scalar C interop (`extern fn`/`export fn`, native only), and two code-generation targets (x86-64 Linux via clang, wasm32 via clang+lld run under Node), both tested to agree with the interpreters. Large parts of the vision (traits, borrowing through references into heap values (`&*box`, borrowing `match`), standard library, pointer/string FFI, embedded/GPU targets, Python/JS interop) are not built; see `docs/LEDGER.md`. Not a release.
@@ -18,3 +22,5 @@ cargo test            # 298 tests
 - Language spec: `docs/SPEC.md`; IR spec: `docs/UIR.md`; benchmarks: `docs/BENCHMARKS.md`
 - What exists / what does not: `docs/LEDGER.md`
 - Plan: `docs/ROADMAP.md`; assessment of the original blueprint: `docs/ASSESSMENT.md`; video notes: `docs/VIDEO_ANALYSIS.md`; decisions and defects: `docs/DEVLOG.md`
+
+- Brand assets: `assets/kendrah-banner.svg`, `assets/kendrah-icon.svg` (text is outlined; regenerate with `python3 assets/make_brand.py`, needs fontTools and DejaVu fonts)
