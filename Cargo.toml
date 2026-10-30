@@ -1,0 +1,15 @@
+[package]
+name = "kendrah"
+version = "0.1.0"
+edition = "2021"
+description = "K.E.N.D.R.A.H. - Unified Spectrum Programming Language (milestone M1: typed front end + tree-walk interpreter)"
+
+[lib]
+name = "kendrah"
+path = "src/lib.rs"
+
+[[bin]]
+name = "kendrah"
+path = "src/main.rs"
+
+[dependencies]
