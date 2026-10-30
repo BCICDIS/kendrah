@@ -1,0 +1,25 @@
+// Fixed-size arrays, bounds-checked indexing, nested arrays, sieve of Eratosthenes.
+fn main() {
+    let mut sieve = [true; 50];
+    sieve[0] = false;
+    sieve[1] = false;
+    let mut i = 2;
+    while i * i < 50 {
+        if sieve[i] {
+            let mut j = i * i;
+            while j < 50 { sieve[j] = false; j = j + i; }
+        }
+        i = i + 1;
+    }
+    let mut count = 0;
+    let mut k = 0;
+    while k < len(sieve) {
+        if sieve[k] { count = count + 1; }
+        k = k + 1;
+    }
+    print(count);
+    let mut grid = [[0; 3]; 2];
+    grid[1][2] = 5;
+    grid[0][0] = 1;
+    print(grid[1][2] + grid[0][0]);
+}

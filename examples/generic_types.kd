@@ -1,0 +1,27 @@
+// Generic structs and enums (monomorphized). Opt<T> is a user-defined "maybe" type.
+enum Opt<T> { Some(T), None }
+struct Pair<A, B> { first: A, second: B }
+
+fn find(a: [i64; 5], key: i64) -> Opt<i64> {
+    for i in 0..5 {
+        if a[i] == key { return Opt::Some(i); }
+    }
+    Opt::None
+}
+
+fn unwrap_or<T>(o: Opt<T>, fallback: T) -> T {
+    match o { Opt::Some(v) => v, Opt::None => fallback }
+}
+
+fn swap<A, B>(p: Pair<A, B>) -> Pair<B, A> {
+    Pair { first: p.second, second: p.first }
+}
+
+fn main() {
+    let data = [10, 20, 30, 40, 50];
+    print(unwrap_or(find(data, 30), -1));   // 2
+    print(unwrap_or(find(data, 99), -1));   // -1
+    let s = swap(Pair { first: 7, second: true });
+    print(s.first);                         // true
+    print(s.second);                        // 7
+}

@@ -1,0 +1,21 @@
+// Growable vectors: a sieve of Eratosthenes with Vec<bool> and a Vec<i64> of the primes found.
+fn primes_below(n: i64) -> Vec<i64> {
+    let mut composite: Vec<bool> = vec_new();
+    for i in 0..n { vec_push(&mut composite, false); }
+    let mut primes: Vec<i64> = vec_new();
+    for i in 2..n {
+        if !composite[i] {
+            vec_push(&mut primes, i);
+            let mut j = i * i;
+            while j < n { composite[j] = true; j = j + i; }
+        }
+    }
+    primes
+}
+
+fn main() {
+    let p = primes_below(60);
+    print(vec_len(&p));      // 17
+    print(p[0]);             // 2
+    print(p[vec_len(&p) - 1]); // 59
+}

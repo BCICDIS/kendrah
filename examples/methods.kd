@@ -1,0 +1,26 @@
+// impl blocks: associated functions, methods, Self, generic impls.
+struct Counter { n: i64, step: i64 }
+
+impl Counter {
+    fn new(step: i64) -> Self { Self { n: 0, step: step } }
+    fn tick(&mut self) { self.n = self.n + self.step; }
+    fn value(&self) -> i64 { self.n }
+}
+
+enum Opt<T> { Some(T), None }
+
+impl<T> Opt<T> {
+    fn is_some(&self) -> bool { match *self { Opt::Some(_) => true, Opt::None => false } }
+    fn unwrap_or(self, fallback: T) -> T { match self { Opt::Some(v) => v, Opt::None => fallback } }
+}
+
+fn main() {
+    let mut c = Counter::new(5);
+    c.tick();
+    c.tick();
+    print(c.value());            // 10
+    let a = Opt::Some(42);
+    print(a.is_some());          // true
+    let none: Opt<i64> = Opt::None;
+    print(none.unwrap_or(-1));   // -1
+}

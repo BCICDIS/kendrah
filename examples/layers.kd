@@ -1,0 +1,33 @@
+// One program, three layers. Unsafe memory access exists only in the hardware layer and
+// is bounds-checked by the M0 interpreter (simulated 256-byte memory).
+@layer(hardware)
+fn fill(base: i64, n: i64) {
+    let mut i = 0;
+    while i < n {
+        unsafe { poke(base + i, (i + 1) * 10); }
+        i = i + 1;
+    }
+}
+
+@layer(hardware)
+fn checksum(base: i64, n: i64) -> i64 {
+    let mut s = 0;
+    let mut i = 0;
+    while i < n {
+        s = s + unsafe { peek(base + i) };
+        i = i + 1;
+    }
+    s
+}
+
+@layer(declarative)
+fn hypot_sq(a: f64, b: f64) -> f64 { a * a + b * b }
+
+@layer(application)
+fn main() {
+    fill(16, 5);
+    print(checksum(16, 5));
+    print(hypot_sq(3.0, 4.0));
+    let avg = checksum(16, 5) as f64 / 5.0;
+    print(avg);
+}

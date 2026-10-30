@@ -1,0 +1,19 @@
+// Modules, visibility, super:: and crate:: paths.
+mod math {
+    pub fn square(x: i64) -> i64 { x * x }
+    fn hidden() -> i64 { 1 }
+    pub mod inner {
+        pub fn cube(x: i64) -> i64 { x * super::square(x) }
+        pub fn from_root() -> i64 { crate::twice(21) }
+    }
+    pub fn one() -> i64 { hidden() }
+}
+
+fn twice(x: i64) -> i64 { x * 2 }
+
+fn main() {
+    print(math::square(7));
+    print(math::inner::cube(3));
+    print(math::inner::from_root());
+    print(math::one());
+}

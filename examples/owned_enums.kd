@@ -1,0 +1,40 @@
+// Enums that own heap values, consumed by value with `match` (docs/MEMORY.md section 3c).
+enum Opt<T> { Some(T), None }
+
+enum Msg { Text(String), Pair(String, String), Numbers(Vec<i64>), Quit }
+
+fn find(names: &Vec<i64>, want: i64) -> Opt<String> {
+    let mut i = 0;
+    while i < vec_len(names) {
+        if names[i] == want { return Opt::Some(string_from("found")); }
+        i = i + 1;
+    }
+    Opt::None
+}
+
+fn describe(m: Msg) -> i64 {
+    match m {
+        Msg::Text(t) => string_len(&t),
+        Msg::Pair(a, _) => string_len(&a),
+        Msg::Numbers(v) => vec_len(&v),
+        Msg::Quit => -1,
+    }
+}
+
+fn main() {
+    let mut v: Vec<i64> = vec_new();
+    vec_push(&mut v, 3);
+    vec_push(&mut v, 8);
+    match find(&v, 8) {
+        Opt::Some(s) => print(&s),
+        Opt::None => print(0),
+    }
+    match find(&v, 5) {
+        Opt::Some(s) => print(&s),
+        Opt::None => print(0),
+    }
+    print(describe(Msg::Text(string_from("hello"))));
+    print(describe(Msg::Pair(string_from("ab"), string_from("cdef"))));
+    print(describe(Msg::Numbers(v)));
+    print(describe(Msg::Quit));
+}

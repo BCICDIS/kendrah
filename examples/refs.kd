@@ -1,0 +1,29 @@
+// Second-class references, in-place mutation and disjoint borrows (docs/MEMORY.md).
+struct Point { x: i64, y: i64 }
+
+fn swap(a: &mut i64, b: &mut i64) { let t = *a; *a = *b; *b = t; }
+
+fn sort(a: &mut [i64; 6]) {
+    let mut i = 0;
+    while i < len(a) {
+        let mut j = 0;
+        while j + 1 < len(a) - i {
+            if a[j] > a[j + 1] { let t = a[j]; a[j] = a[j + 1]; a[j + 1] = t; }
+            j = j + 1;
+        }
+        i = i + 1;
+    }
+}
+
+fn norm1(p: &Point) -> i64 { p.x + p.y }
+
+fn main() {
+    let mut v = [9, 4, 7, 1, 8, 2];
+    sort(&mut v);
+    let mut i = 0;
+    while i < 6 { print(v[i]); i = i + 1; }
+    let mut p = Point { x: 3, y: 4 };
+    swap(&mut p.x, &mut p.y);
+    print(p.x * 10 + p.y);
+    print(norm1(&p));
+}

@@ -1,0 +1,58 @@
+// Box<T>: heap cells and recursive types (docs/MEMORY.md section 3d).
+enum List { Cons(i64, Box<List>), Nil }
+
+enum Tree { Node(Box<Tree>, i64, Box<Tree>), Leaf }
+
+fn range(n: i64) -> List {
+    let mut l = List::Nil;
+    let mut i = n;
+    while i > 0 {
+        l = List::Cons(i, box_new(l));
+        i = i - 1;
+    }
+    l
+}
+
+fn sum(l: List) -> i64 {
+    match l {
+        List::Cons(h, t) => h + sum(box_into(t)),
+        List::Nil => 0,
+    }
+}
+
+fn insert(t: Tree, v: i64) -> Tree {
+    match t {
+        Tree::Leaf => Tree::Node(box_new(Tree::Leaf), v, box_new(Tree::Leaf)),
+        Tree::Node(l, x, r) => {
+            if v < x { Tree::Node(box_new(insert(box_into(l), v)), x, r) }
+            else { Tree::Node(l, x, box_new(insert(box_into(r), v))) }
+        }
+    }
+}
+
+fn height(t: Tree) -> i64 {
+    match t {
+        Tree::Leaf => 0,
+        Tree::Node(l, _, r) => {
+            let a = height(box_into(l));
+            let b = height(box_into(r));
+            if a > b { a + 1 } else { b + 1 }
+        }
+    }
+}
+
+fn main() {
+    print(sum(range(100)));
+    let mut t = Tree::Leaf;
+    let mut i = 0;
+    while i < 15 {
+        t = insert(t, (i * 7) % 15);
+        i = i + 1;
+    }
+    print(height(t));
+    let counter = box_new(0);
+    let mut c = counter;
+    let cur = box_get(&c);
+    box_set(&mut c, cur + 5);
+    print(box_get(&c));
+}

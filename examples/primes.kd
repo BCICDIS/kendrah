@@ -1,0 +1,21 @@
+// Count primes below 100 by trial division.
+fn is_prime(n: i64) -> bool {
+    if n < 2 { return false; }
+    let mut d = 2;
+    while d * d <= n {
+        if n % d == 0 { return false; }
+        d = d + 1;
+    }
+    true
+}
+
+fn main() {
+    let mut n = 0;
+    let mut count = 0;
+    while n < 100 {
+        if is_prime(n) { count = count + 1; }
+        n = n + 1;
+    }
+    print("primes below 100:");
+    print(count);
+}

@@ -1,0 +1,26 @@
+// Owned heap strings: moves, borrows, drops (docs/MEMORY.md section 3).
+fn greet(name: &String) -> String {
+    let hello = string_from("hello, ");
+    let full = string_concat(&hello, name);
+    full
+}
+
+fn shout(s: &mut String) {
+    string_push(s, "!");
+}
+
+fn consume(s: String) -> i64 {
+    string_len(&s)
+}
+
+fn main() {
+    let name = string_from("kendrah");
+    let mut g = greet(&name);
+    shout(&mut g);
+    shout(&mut g);
+    print(&g);
+    let copy = string_clone(&g);
+    print(string_eq(&g, &copy));
+    print(consume(copy));
+    print(string_len(&name));
+}

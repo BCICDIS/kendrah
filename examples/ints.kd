@@ -1,0 +1,20 @@
+// Sized integers, wrapping casts, shifts and bit operations in the hardware layer.
+@layer(hardware)
+fn crc8(x: u8) -> u8 {
+    let mut v = x;
+    let mut i = 0;
+    while i < 8 {
+        if v & 128 != 0 { v = (v << 1) ^ 29; } else { v = v << 1; }
+        i = i + 1;
+    }
+    v
+}
+
+fn main() {
+    print(crc8(1));
+    print(crc8(128));
+    let wide: i64 = 300;
+    print(wide as u8);
+    let small: u8 = 250;
+    print(small as u32 + 10);
+}
